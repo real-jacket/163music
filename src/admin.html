@@ -4,24 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理员页面</title>
-    <style>
-        #container{
-            width: 200px;
-            height: 100px;
-            padding: 10px 50px;
-            border: 2px dashed #dddddd;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <div id="container">
-        <button id="load">点击或拖拽上传文件</button>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="newSong">新建歌曲</div>
+            <ul class="songList">
+                <li>歌曲1</li>
+                <li>歌曲2</li>
+                <li>歌曲3</li>
+                <li class="active">歌曲4</li>
+                <li>歌曲5</li>
+                <li>歌曲6</li>
+                <li>歌曲7</li>
+                <li>歌曲8</li>
+                <li>歌曲9</li>
+                <li>歌曲10</li>
+            </ul>
+            <div class="uploadArea">
+                <div id="uploadContainer" class="draggable">
+                    <div id="uploadButton" class="clickable">
+                        <p>点击或拖拽文件</p>
+                        <p>文件大小不得超过40MB</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <form class="form">
+                <div class="row">
+                    <label>歌曲</label>
+                    <input type="text"> 
+                </div>
+                <div class="row">
+                    <label>歌名</label>
+                    <input type="text"> 
+                </div>
+                <div class="row">
+                    <label>URL</label>
+                    <input type="text"> 
+                </div>
+                <input type="button" value="提交">
+            </form>
+        </main> 
     </div>
-    <audio controls src="http://pegyd42eq.bkt.clouddn.com/Acreix%20-%20Visions.mp3"></audio>
+    
 
 
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
@@ -31,8 +59,8 @@
         var APP_KEY = 'fqhMzwMJu2YqyoO8aOEuUhXG';
 
         AV.init({
-        appId: APP_ID,
-        appKey: APP_KEY
+            appId: APP_ID,
+            appKey: APP_KEY
         });
         // //创建数据可以
         // var TestObject = AV.Object.extend('SongList');
@@ -55,17 +83,17 @@
 
         var uploader = Qiniu.uploader({
             runtimes: 'html5',    //上传模式,依次退化
-            browse_button: 'load',       //上传选择的点选按钮，**必需**
+            browse_button: 'uploadButton',       //上传选择的点选按钮，**必需**
             uptoken_url: 'http://localhost:8888/uptoken',            //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
             // uptoken : '', //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
             // unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
             // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
-            domain: 'http://qiniu-plupload.qiniudn.com/',   //bucket 域名，下载资源时用到，**必需**
+            domain: 'http://pegyd42eq.bkt.clouddn.com',   //bucket 域名，下载资源时用到，**必需**
             get_new_uptoken: false,  //设置上传文件的时候是否每次都重新获取新的token
-            container: 'container',           //上传区域DOM ID，默认是browser_button的父元素，
+            container: 'uploadContainer',           //上传区域DOM ID，默认是browser_button的父元素，
             max_file_size: '40mb',           //最大文件体积限制
             dragdrop: true,                   //开启可拖曳上传
-            drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+            drop_element: 'uploadContainer',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
             chunk_size: '4mb',                //分块上传时，每片的体积
             auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
             init: {
@@ -89,23 +117,16 @@
                         //  }
                         // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
 
-                        // var domain = up.getOption('domain');
-                        // var res = parseJSON(info.response);
-                        // var sourceLink = domain + res.key; 获取上传成功后的文件的Url
+                        var domain = up.getOption('domain');
+                        var res = JSON.parse(info.response);
+                        //var sourceLink = domain + res.key; //获取上传成功后的文件的Url
+                        var sourceLink = domain + '/' + encodeURIComponent(res.key);
                 },
                 'Error': function(up, err, errTip) {
                         //上传出错时,处理相关的事情
                 },
                 'UploadComplete': function() {
                         //队列文件处理完毕后,处理相关的事情
-                },
-                'Key': function(up, file) {
-                    // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-                    // 该配置必须要在 unique_names: false , save_key: false 时才生效
-                    
-                    var key = "";
-                    // do something with key here
-                    return key
                 }
             }
         });
