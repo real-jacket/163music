@@ -11,7 +11,7 @@ body{
 }
 
 /* layout */
-.page{
+.page {
     display: flex;
     height: 100vh;
 }
@@ -56,3 +56,38 @@ body{
     cursor: pointer;
 }
 
+/*main*/
+.page > main{
+    background: #d4d4d4;
+    padding-left: 20px;
+}
+.page > main > h1{
+    margin: 20px 0;
+}
+.form{
+}
+.form > .row{
+    margin: 20px 0;
+    font-size: 16px;
+    display: flex;
+}
+.form input[type=text],
+.form input[type=button]{
+    height: 30px;
+    font-size: inherit;
+    padding-left:10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border:1px solid #dddddd;
+    background: white;
+}
+.form > .row.action{
+    margin-left: calc(4em + 5px);
+}
+.form label{
+    display: flex;
+    width: 4em;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 5px;
+}
