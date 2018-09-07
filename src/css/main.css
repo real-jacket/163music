@@ -33,11 +33,13 @@ body{
     text-align: center;
     padding: 10px;
 }
-.songList {
-    border-top: 1px solid #999999;
+.songList-container{
     flex-grow: 1;
 }
-.songList .active {
+.songList {
+    border-top: 1px solid #999999;
+}
+.active {
     background: #d4d4d4;
 }
 .songList > li {
@@ -72,7 +74,7 @@ body{
     display: flex;
 }
 .form input[type=text],
-.form input[type=button]{
+.form input[type=submit]{
     height: 30px;
     font-size: inherit;
     padding-left:10px;

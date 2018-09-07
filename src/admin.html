@@ -10,9 +10,7 @@
     <div class="page">
         <aside class="sidebar">
             <div class="newSong"></div>
-            <ul class="songList">
-                
-            </ul>
+            <div class="songList-container"></div>
             <div class="uploadArea">
                 
             </div>
@@ -23,36 +21,12 @@
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
+    <script src="./js/initializers/av.js"></script>
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
+    <script src="./js/event-hub.js"></script>
     <script src="./js/song-form.js"></script>
     <script src="./js/new-song.js"></script>
     <script src="./js/song-list.js"></script>
     <script src="./js/upload-song.js"></script>
-    <script>
-        var APP_ID = 'bGpniTq2xXCRzbYd6JC31142-gzGzoHsz';
-        var APP_KEY = 'fqhMzwMJu2YqyoO8aOEuUhXG';
-
-        AV.init({
-            appId: APP_ID,
-            appKey: APP_KEY
-        });
-        // //创建数据可以
-        // var TestObject = AV.Object.extend('SongList');
-        // //创建一条记录
-        // var testObject = new TestObject();
-        // //保存记录
-        // testObject.save({
-        //     title:'test',
-        //     cover:'test',
-        //     author:'test',
-        //     description:'test',
-        //     songs:['1','2','3']
-        // }).then(function(object) {
-        //     alert('LeanCloud Rocks!');
-        // },()=>{
-        //     alert('Fail');
-        // })
-        
-    </script>
 </body>
 </html>
