@@ -7,6 +7,9 @@
         render(data){
             $(this.el).html(this.template)
         },
+        clearActive(){
+            $(this.el).removeClass('active')
+        },
         addActive(){
             $(this.el).addClass('active');
         }
@@ -18,8 +21,17 @@
             this.model = model;
             this.view.addActive();
             this.view.render(this.model.data)
-            window.eventHub.on('upload',()=>{
+            window.eventHub.on('new',()=>{
                 this.view.addActive();
+            })
+            window.eventHub.on('click',()=>{
+                this.view.clearActive();
+            })
+            this.bindEvents();
+        },
+        bindEvents(){
+            $(this.view.el).on('click',()=>{
+                window.eventHub.emit('new');
             })
         }
     }
