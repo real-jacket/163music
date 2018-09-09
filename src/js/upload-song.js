@@ -51,6 +51,9 @@
                             // 每个文件上传前,处理相关的事情
                     },
                     'UploadProgress': function(up, file) {
+                        console.log('正在上传')
+                        window.eventHub.emit('beforeupload')
+                        console.log('触发lbefor')
                             // 每个文件上传时,处理相关的事情
                     },
                     'FileUploaded': function(up, file, info) {
@@ -61,6 +64,9 @@
                             //    "key": "gogopher.jpg"
                             //  }
                             // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+                            console.log('上传结束')
+                            window.eventHub.emit('afterupload')
+                            console.log('触发after')
 
                             var domain = up.getOption('domain');
                             var res = JSON.parse(info.response);
