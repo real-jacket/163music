@@ -3,6 +3,12 @@
         el:'.tabContent > .page-2',
         init(){
             this.$el = $(this.el);
+        },
+        show(){
+            this.$el.addClass('active')
+        },
+        hide(){
+            this.$el.removeClass('active')
         }
     }
     let model = {}
@@ -16,8 +22,9 @@
         bindEvents(){
             window.eventHub.on('selectItem',(tagName)=>{
                 if(tagName === 'page-2'){
-                    this.view.$el.addClass('active')
-                        .siblings().removeClass('active')
+                    this.view.show()
+                }else{
+                    this.view.hide()
                 }
             })
         }

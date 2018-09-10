@@ -1,8 +1,14 @@
 {
     let view = {
-        el:'.tabContent > .page-3',
+        el:'.tabContent > .page-2',
         init(){
             this.$el = $(this.el);
+        },
+        show(){
+            this.$el.addClass('active')
+        },
+        hide(){
+            this.$el.removeClass('active')
         }
     }
     let model = {}
@@ -15,9 +21,10 @@
         },
         bindEvents(){
             window.eventHub.on('selectItem',(tagName)=>{
-                if(tagName === 'page-3'){
-                    this.view.$el.addClass('active')
-                        .siblings().removeClass('active')
+                if(tagName === 'page-2'){
+                    this.view.show()
+                }else{
+                    this.view.hide()
                 }
             })
         }
