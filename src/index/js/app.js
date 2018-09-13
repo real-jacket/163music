@@ -4,37 +4,36 @@
         init(){
             this.$el = $(this.el)
         },
-        template:`
-            <audio src={{url}}></audio>
-            <div>
-                <button class = 'play'>播放</button>
-                <button class = 'pause'>暂停</button>
-            </div>
-        `,
         render(song){
-            this.$el.html(this.template
-                .replace('{{url}}',song.url))
+            this.$el.find('audio').attr('src',song.url)
+            this.$el.find('.disc-container').addClass('playing')
+            this.$el.css('background-image',`url(${song.cover})`)
+            this.$el.find('.disc>.cover').attr('src',song.cover)
         },
-        play(button){
-            let audio = this.$el.find('audio')[0];
-            audio.play()
+        play(){
+            this.$el.find('audio')[0].play()
+            this.$el.find('.disc-container').addClass('playing')
         },
-        pause(button){
-            let audio = this.$el.find('audio')[0];
-            audio.pause()
+        pause(){
+            this.$el.find('audio')[0].pause()
+            this.$el.find('.disc-container').removeClass('playing')
         }
     }
     let model = {
         data:{
-            id:'',
-            name:'',
-            singer: '',
-            url: ''
+            song:{
+                id:'',
+                name:'',
+                singer: '',
+                url: '',
+                cover:''
+            },
+            status:'play'  
         },
         getSong(id){
             var query = new AV.Query('Song');
             return query.get(id).then((song) => {
-                Object.assign(this.data, {id,...song.attributes})
+                Object.assign(this.data.song, {id,...song.attributes})
                 return song;
             })
         }
@@ -46,16 +45,24 @@
             this.view.init();
             let id = this.getSongId();
             this.model.getSong(id).then(()=>{
-                this.view.render(this.model.data)
+                this.view.render(this.model.data.song)
             });
             this.bindEvents()
         },
         bindEvents(){
-            this.view.$el.on('click','.play',(e)=>{
-                this.view.play()
-            })
-            this.view.$el.on('click','.pause',()=>{
-                this.view.pause()
+            this.view.$el.on('click','.icon-wrapper',()=>{
+                let status = this.model.data.status
+                if(status === 'pause'){
+                    this.view.play();
+                    this.model.data.status = 'play'
+                }else{
+                    this.view.pause()
+                    this.model.data.status = 'pause'
+                }
+            });
+            this.view.$el.find('audio').on('ended',()=>{
+                this.view.pause();
+                this.model.data.status = 'pause'
             })
         },
         getSongId(){

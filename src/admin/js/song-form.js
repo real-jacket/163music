@@ -18,13 +18,17 @@
                 <label>URL</label>
                 <input type="text" name="url" value = "__url__"> 
             </div>
+            <div class="row">
+                <label>封面</label>
+                <input type="text" name="cover" value = "__cover__"> 
+            </div>
             <div class="row action">
                 <input type="submit" value="保存">
             </div>
         </form>
         `,
         render(data = {}){
-            let placeholders = ['name','singer','url','id']
+            let placeholders = ['name','singer','url','id','cover']
             let html = this.template
             placeholders.map((string)=>{
                 html = html.replace(`__${string}__`, data[string] || '')
@@ -38,14 +42,14 @@
         },
         reset(){
             this.render({
-                name: '',singer: '',url: '',id: ''
+                name: '',singer: '',url: '',id: '',cover:''
             })
         }
     };
 
     let model = {
         data: {
-            name: '',singer: '',url: '',id: ''
+            name: '',singer: '',url: '',id: '',cover:''
         },
         creat(data){
          // 声明类型
@@ -56,6 +60,7 @@
          song.set('name',data.name);
          song.set('singer',data.singer);
          song.set('url',data.url);
+         song.set('cover',data.cover);
 
          return song.save().then((newSong)=> {
             let { id, attributes } = newSong;
@@ -71,6 +76,7 @@
             song.set('name', data.name);
             song.set('singer',data.singer);
             song.set('url', data.url);
+            song.set('cover', data.cover);
             // 保存到云端
             return song.save().then((reseponse)=>{
                 Object.assign(this.data,data)
@@ -93,7 +99,7 @@
             window.eventHub.on('new',(data)=>{
                 if(this.model.data.id){
                     this.model.data = {
-                        name: '',singer: '',url: '',id: ''
+                        name: '',singer: '',url: '',id: '',cover:''
                     };
                 }else{
                     Object.assign(this.model.data,data)
@@ -102,7 +108,7 @@
             })
         },
         create(){
-            let needs = 'name singer url'.split(' ');
+            let needs = 'name singer url cover'.split(' ');
             let data = {};
             needs.map((string)=>{
                 data[string] = this.view.$el.find(`[name="${string}"]`).val()
@@ -112,12 +118,12 @@
                     this.view.reset()
                     window.eventHub.emit('create',JSON.parse(JSON.stringify(this.model.data)));
                     this.model.data = {
-                        name: '',singer: '',url: '',id: ''
+                        name: '',singer: '',url: '',id: '',cover:''
                     }
                 })
         },
         update(){
-            let needs = 'name singer url'.split(' ');
+            let needs = 'name singer url cover'.split(' ');
             let data = {};
             needs.map((string)=>{
                 data[string] = this.view.$el.find(`[name="${string}"]`).val()
@@ -125,7 +131,7 @@
             this.model.update(data).then(()=>{
                 window.eventHub.emit('update',JSON.parse(JSON.stringify(this.model.data)))
                 this.model.data={
-                    name: '',singer: '',url: '',id: ''
+                    name: '',singer: '',url: '',id: '',cover:''
                 }
             })
         },
