@@ -9,6 +9,57 @@
             this.$el.find('.disc-container').addClass('playing')
             this.$el.css('background-image',`url(${song.cover})`)
             this.$el.find('.disc>.cover').attr('src',song.cover)
+            
+            this.$el.find('.song-description  h1').text(song.name)
+
+            let {lyrics} = song;
+            lyrics.split('\n').map((string)=>{
+                let regex = /\[([\d:.]+)\](.+)/;
+                let matches = string.match(regex)
+                let p = document.createElement('p');
+                if(matches){
+                    p.textContent = matches[2]
+                    let time = matches[1];
+                    let pars = time.split(':')
+                    let minute = pars[0];
+                    let seconds = pars[1];
+                    let newtime = parseInt(minute,10)*60 + parseFloat(seconds,10)
+                    p.setAttribute('data-time',newtime)
+                }else{
+                    p.textContent = string;
+                }
+                this.$el.find('.song-description > .lyric > .lines').append(p)
+            })
+            this.showlyrics()
+            
+        },
+        showlyrics(){
+            let audio = this.$el.find('audio');
+            let allP = this.$el.find('.song-description > .lyric > .lines > p')
+            audio.on('timeupdate',()=>{
+                let time = audio[0].currentTime;
+                let p
+                for(let i = 0;i<allP.length;i++){
+                    if( i === allP.length - 1){
+                        p = allP[i]
+                        break
+                    }else{
+                        let currenTime = allP.eq(i).attr('data-time')
+                        let nextTime = allP.eq(i+1).attr('data-time')
+                        if(time >= currenTime && time < nextTime ){
+                            p = allP[i]
+                            break
+                        }
+                    }
+                }
+                let pHeight = p.getBoundingClientRect().top
+                let lineHeight = this.$el.find('.song-description > .lyric > .lines')[0].getBoundingClientRect().top;
+                let height = pHeight - lineHeight;
+                this.$el.find('.song-description > .lyric > .lines').css({
+                    transform:`translateY(${-(height-20)}px)`
+                })
+                this.active(p) 
+            })
         },
         play(){
             this.$el.find('audio')[0].play()
@@ -17,6 +68,9 @@
         pause(){
             this.$el.find('audio')[0].pause()
             this.$el.find('.disc-container').removeClass('playing')
+        },
+        active(p){
+            $(p).addClass('active').siblings().removeClass('active')
         }
     }
     let model = {
@@ -26,7 +80,8 @@
                 name:'',
                 singer: '',
                 url: '',
-                cover:''
+                cover:'',
+                lyrics:''
             },
             status:'play'  
         },
