@@ -7,6 +7,17 @@
 	background: transparent url() no-repeat center;
 	background-size: cover;
 }
+.page::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    filter: blur(5px);
+}
 
 .disc-container{position: relative; }
 .disc-container .icon-wrapper{position: absolute; z-index: 1; display: flex; 
@@ -38,6 +49,7 @@
 	text-align: center;
 	line-height: 2;
 	margin-top: 20px;
+	z-index: 1;
 }
 .song-description h1{
 	color: white;
@@ -63,6 +75,7 @@
 	justify-content: center;
 	align-items: center;
 	color: #D43B32;
+	z-index: 1;
 }
 .page > .links > a{
 	width: 38.5vw;
