@@ -123,9 +123,6 @@
                 .then(()=>{
                     this.view.reset()
                     window.eventHub.emit('create',JSON.parse(JSON.stringify(this.model.data)));
-                    this.model.data = {
-                        name: '',singer: '',url: '',id: '',cover:'',lyrics:''
-                    }
                 })
         },
         update(){
@@ -136,9 +133,6 @@
             })
             this.model.update(data).then(()=>{
                 window.eventHub.emit('update',JSON.parse(JSON.stringify(this.model.data)))
-                this.model.data={
-                    name: '',singer: '',url: '',id: '',cover:'',lyrics:''
-                }
             })
         },
         bindEvents(){

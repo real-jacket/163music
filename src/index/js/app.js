@@ -6,9 +6,14 @@
         },
         render(song){
             this.$el.find('audio').attr('src',song.url)
-            this.$el.find('.disc-container').addClass('playing')
-            this.$el.css('background-image',`url(${song.cover})`)
-            this.$el.find('.disc>.cover').attr('src',song.cover)
+            if(song.cover){
+                this.$el.css('background-image',`url(${song.cover})`)
+                this.$el.find('.disc>.cover').attr('src',song.cover)
+            }else{
+                let cover_url = 'http://p1.music.126.net/GQ9JkLt6QBaAoLbJ8UOoCQ==/3406287023862462.jpg?imageView&thumbnail=360y360&quality=75&tostatic=0'
+                this.$el.css('background-image',`url(${cover_url})`)
+                this.$el.find('.disc>.cover').attr('src',cover_url)
+            }
             
             this.$el.find('.song-description  h1').text(song.name)
 
@@ -83,12 +88,12 @@
                 cover:'',
                 lyrics:''
             },
-            status:'play'  
+            status:'pause'  
         },
         getSong(id){
             var query = new AV.Query('Song');
             return query.get(id).then((song) => {
-                Object.assign(this.data.song, {id,...song.attributes})
+                Object.assign(this.data.song, Object.assign({id:song.id} ,song.attributes))
                 return song;
             })
         }
