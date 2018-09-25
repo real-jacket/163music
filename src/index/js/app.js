@@ -7,11 +7,11 @@
         render(song){
             this.$el.find('audio').attr('src',song.url)
             if(song.cover){
-                this.$el.css('background-image',`url(${song.cover})`)
+                this.$el.find('.backgroundimg').css('background-image',`url(${song.cover})`)
                 this.$el.find('.disc>.cover').attr('src',song.cover)
             }else{
                 let cover_url = 'http://p1.music.126.net/GQ9JkLt6QBaAoLbJ8UOoCQ==/3406287023862462.jpg?imageView&thumbnail=360y360&quality=75&tostatic=0'
-                this.$el.css('background-image',`url(${cover_url})`)
+                this.$el.find('.backgroundimg').css('background-image',`url(${cover_url})`)
                 this.$el.find('.disc>.cover').attr('src',cover_url)
             }
             
