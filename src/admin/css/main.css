@@ -34,7 +34,9 @@ body{
     padding: 10px;
 }
 .songList-container{
-    flex-grow: 1;
+    height: calc(100vh - 134px);
+    overflow: auto;
+
 }
 .songList {
     border-top: 1px solid #999999;
