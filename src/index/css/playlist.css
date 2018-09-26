@@ -59,8 +59,9 @@ a{text-decoration: none;color: inherit;}
     font-size: 3.7vw;
 }
 .playlist{
-    height: 1000px;
     background: white;
+    padding-bottom: 16vw;
+    min-height: 115vw;
 }
 
 .playlist>h3{
@@ -127,6 +128,7 @@ a{text-decoration: none;color: inherit;}
     bottom: 0;
     left: 0;
     width: 100vw;
+    height: 16vw;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     background: white;
