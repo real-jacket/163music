@@ -17,13 +17,19 @@
         `,
         render(data){
             let {songs} = data;
+            let i = 0;
             songs.map((song)=>{
                 let $li = $(this.template
                     .replace(/{{song.name}}/g,song.name)
                     .replace('{{song.singer}}',song.singer)
                     .replace('{{song.id}}',song.id)
                 );
-                this.$el.find('ol#latestMusic').append($li)
+                i= i + 1
+                if(i<15){
+                    this.$el.find('ol#latestMusic').append($li)
+                }else{
+                    return
+                }
             })
         }
     }
