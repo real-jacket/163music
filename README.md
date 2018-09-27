@@ -8,6 +8,7 @@
 ## 首页
 
 首页模仿网易云移动端网页制作而成，包括歌曲，歌单等信息都是从后台获取，预览可点击顶部链接。
+该页面使用了vw针对移动端进行制作，建议在移动端页面浏览，使用手机或者浏览器控制台打开手机端网页。
 
 ## 后台管理
 
@@ -17,7 +18,7 @@
 1. 运行`http-server`服务（安装`npm i -g http-server`）
 2. 在根目录运行`http-server -c-1`
 3. 运行本地服务器，`node server.js 8888`
-4. 在浏览器打开网址：http://127.0.0.1:8080/admin/index.html (歌曲上传后台)或http://127.0.0.1:8080/admin-playlist/index-playlist.html（歌单上传后台）
+4. 在浏览器打开网址：http://127.0.0.1:8080/admin/index.html (歌曲上传后台)或http://127.0.0.1:8080/admin-playlist/index-playlist.html （歌单上传后台）
 
 
 ## 关于后台
